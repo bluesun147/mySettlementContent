@@ -3,6 +3,8 @@
 
 Spring Batch를 사용한 my 정산 시스템 구현
 
+https://www.notion.so/My-Settlement-c6fdff2f8b284657913a9f308ceb15de
+
 <h2 id="features"> ✨ Key Features </h2>
 
 
