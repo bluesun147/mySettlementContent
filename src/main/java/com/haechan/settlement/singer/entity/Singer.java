@@ -1,10 +1,7 @@
 package com.haechan.settlement.singer.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 // 가창자
 
@@ -18,4 +15,9 @@ public class Singer {
 
     @Column
     private String name;
+
+    @Builder
+    Singer(String name) {
+        this.name = name;
+    }
 }
