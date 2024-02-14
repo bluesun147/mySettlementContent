@@ -2,6 +2,7 @@ package com.haechan.settlement.producer.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +18,9 @@ public class Producer {
 
     @Column
     private String name;
+
+    @Builder
+    Producer(String name) {
+        this.name = name;
+    }
 }

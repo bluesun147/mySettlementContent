@@ -2,6 +2,7 @@ package com.haechan.settlement.distributor.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,5 +20,11 @@ public class Distributor {
     private String name;
 
     @Column
-    private String percent;
+    private Double percent;
+
+    @Builder
+    Distributor(String name, Double percent) {
+        this.name = name;
+        this.percent = percent;
+    }
 }

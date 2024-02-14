@@ -2,6 +2,7 @@ package com.haechan.settlement.drama.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,4 +16,9 @@ public class Drama {
 
     @Column
     private String title;
+
+    @Builder
+    Drama(String name) {
+        this.title = title;
+    }
 }
