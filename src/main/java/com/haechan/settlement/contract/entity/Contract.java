@@ -40,18 +40,9 @@ public class Contract {
     @Column
     private Double producerPercent;
 
-    // 유통사 퍼센트
-    @Column
-    private Double distributorPercent;
-
     // 가창자 퍼센트
     @Column
     private Double singerPercent;
-
-
-    // 정산 대상 id
-    @Column
-    private Long memberId;
 
     // 시작일
     @Column
@@ -67,15 +58,13 @@ public class Contract {
 
     @Builder
     public Contract(Producer producer, Distributor distributor, Singer singer,
-                    Double producerPercent, Double distributorPercent, Double singerPercent,
-                    Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
+                    Double producerPercent, Double singerPercent,
+                    LocalDateTime startDate, LocalDateTime endDate) {
         this.producer = producer;
         this.distributor = distributor;
         this.singer = singer;
         this.producerPercent = producerPercent;
-        this.distributorPercent = distributorPercent;
         this.singerPercent = singerPercent;
-        this.memberId = memberId;
         this.startDate = startDate;
         this.endDate = endDate;
     }

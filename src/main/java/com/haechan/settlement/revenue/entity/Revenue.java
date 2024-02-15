@@ -3,10 +3,7 @@ package com.haechan.settlement.revenue.entity;
 import com.haechan.settlement.distributor.entity.Distributor;
 import com.haechan.settlement.ost.entity.Ost;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -15,21 +12,21 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@ToString
 public class Revenue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // ost
+    @ManyToOne
+    @JoinColumn(name = "ostId")
+    private Ost ost;
 
     // 유통사
     @ManyToOne
     @JoinColumn(name = "distributorId")
     private Distributor distributor;
-
-    // ost
-    @ManyToOne
-    @JoinColumn(name = "ostId")
-    private Ost ost;
 
     // 날짜
     @Column
@@ -40,9 +37,9 @@ public class Revenue {
     private Double fee;
 
     @Builder
-    public Revenue(Distributor distributor, Ost ost, LocalDateTime date, Double fee) {
-        this.distributor = distributor;
+    public Revenue(Ost ost, Distributor distributor, LocalDateTime date, Double fee) {
         this.ost = ost;
+        this.distributor = distributor;
         this.date = date;
         this.fee = fee;
     }

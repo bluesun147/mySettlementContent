@@ -1,15 +1,13 @@
 package com.haechan.settlement.distributor.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 // 유통사
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 @Entity
 public class Distributor {
     @Id
