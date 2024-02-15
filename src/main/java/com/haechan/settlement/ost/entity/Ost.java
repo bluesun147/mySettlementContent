@@ -4,13 +4,11 @@ import com.haechan.settlement.drama.entity.Drama;
 import com.haechan.settlement.producer.entity.Producer;
 import com.haechan.settlement.singer.entity.Singer;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 @Entity
 public class Ost {
     @Id
