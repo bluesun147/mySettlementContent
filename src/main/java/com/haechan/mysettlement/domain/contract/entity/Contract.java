@@ -8,11 +8,15 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 // 계약서
 
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -52,9 +56,15 @@ public class Contract {
     @Column
     private LocalDateTime endDate;
 
+    // 생성 날짜
+    @Column
+    @CreatedDate
+    private LocalDateTime createdAt;
+
     // 업데이트 날짜
     @Column
-    private LocalDateTime updateDate;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     @Builder
     public Contract(Producer producer, Distributor distributor, Singer singer,
