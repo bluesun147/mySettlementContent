@@ -102,4 +102,10 @@ public class SettlementService {
             settlementRepository.save(companySettlement);
         }
     }
+
+    // 특정월 특정 멤버(유통사, 가창자, 제작사, 본사)의 수익
+    // type: 1, 2, 3, 0
+    public Double getDistributorSettlement(Long type, Long id, LocalDate date) {
+        return settlementRepository.findByTypeAndMemberIdAndSettleDate(type, id, date);
+    }
 }

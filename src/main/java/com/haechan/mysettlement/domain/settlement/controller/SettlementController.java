@@ -20,4 +20,13 @@ public class SettlementController {
     public void calculate(@PathVariable(name="date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         settlementService.calculate(date);
     }
+
+    // 특정월 특정 유통사의 수익
+    @GetMapping("/member")
+    public Double getDistributorSettlement(
+            @RequestParam("type") Long type,
+            @RequestParam("memberid") Long memberId,
+            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return settlementService.getDistributorSettlement(type, memberId, date);
+    }
 }
