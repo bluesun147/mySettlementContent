@@ -2,10 +2,7 @@ package com.haechan.mysettlement.domain.settlement.entity;
 
 import com.haechan.mysettlement.domain.contract.entity.Contract;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 
 // 정산
 
+@ToString
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
