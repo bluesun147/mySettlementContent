@@ -18,7 +18,7 @@ public class Drama {
     private String title;
 
     @Builder
-    Drama(String name) {
+    Drama(String title) {
         this.title = title;
     }
 }
