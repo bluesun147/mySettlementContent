@@ -1,11 +1,11 @@
 package com.haechan.mysettlement.domain.revenue.repository;
 
+import com.haechan.mysettlement.domain.config.TestQueryDslConfig;
 import com.haechan.mysettlement.domain.contract.entity.Contract;
 import com.haechan.mysettlement.domain.contract.repository.ContractRepository;
 import com.haechan.mysettlement.domain.revenue.entity.QRevenue;
 import com.haechan.mysettlement.domain.revenue.entity.Revenue;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,25 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
-@TestConfiguration
-class TestQueryDslConfig {
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    @Bean
-    public JPAQueryFactory jpaQueryFactory() {
-        return new JPAQueryFactory(entityManager);
-    }
-}
-
 
 @DataJpaTest
 @Import(TestQueryDslConfig.class)
