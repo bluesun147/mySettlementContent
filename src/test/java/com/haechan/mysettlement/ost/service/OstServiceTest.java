@@ -54,7 +54,7 @@ class OstServiceTest {
 
         // 드라마
         Drama savedDrama = Drama.builder()
-                .name("dramaName")
+                .title("dramaName")
                 .build();
 
         ReflectionTestUtils.setField(savedDrama, "id", 1L);

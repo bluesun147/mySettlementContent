@@ -5,6 +5,8 @@ import com.haechan.mysettlement.domain.contract.entity.Contract;
 import com.haechan.mysettlement.domain.contract.repository.ContractRepository;
 import com.haechan.mysettlement.domain.distributor.entity.Distributor;
 import com.haechan.mysettlement.domain.distributor.repository.DistributorRepository;
+import com.haechan.mysettlement.domain.ost.entity.Ost;
+import com.haechan.mysettlement.domain.ost.repository.OstRepository;
 import com.haechan.mysettlement.domain.producer.entity.Producer;
 import com.haechan.mysettlement.domain.producer.repository.ProducerRepository;
 import com.haechan.mysettlement.domain.singer.entity.Singer;
@@ -18,14 +20,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
 public class ContractService {
 
     private final ContractRepository contractRepository;
-    private final ProducerRepository producerRepository;
+    private final OstRepository ostRepository;
     private final DistributorRepository distributorRepository;
-    private final SingerRepository singerRepository;
 
     public void uploadFile(MultipartFile file) {
         try {
@@ -33,14 +35,12 @@ public class ContractService {
             List<Contract> contractList = new ArrayList<>();
 
             for (ContractExcelDto dto : contractExcelDtoList) {
-                Producer producer = producerRepository.findById(dto.getProducerId()).orElseThrow();
+                Ost ost = ostRepository.findById(dto.getOstId()).orElseThrow();
                 Distributor distributor = distributorRepository.findById(dto.getDistributorId()).orElseThrow();
-                Singer singer = singerRepository.findById(dto.getSingerId()).orElseThrow();
 
                 Contract contract = Contract.builder()
-                        .producer(producer)
+                        .ost(ost)
                         .distributor(distributor)
-                        .singer(singer)
                         .producerPercent(dto.getProducerPercent())
                         .singerPercent(dto.getSingerPercent())
                         .startDate(dto.getStartDate())

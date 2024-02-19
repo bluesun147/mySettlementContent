@@ -1,7 +1,6 @@
 package com.haechan.mysettlement.domain.revenue.entity;
 
-import com.haechan.mysettlement.domain.distributor.entity.Distributor;
-import com.haechan.mysettlement.domain.ost.entity.Ost;
+import com.haechan.mysettlement.domain.contract.entity.Contract;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,15 +17,10 @@ public class Revenue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ost
+    // 계약서
     @ManyToOne
-    @JoinColumn(name = "ostId")
-    private Ost ost;
-
-    // 유통사
-    @ManyToOne
-    @JoinColumn(name = "distributorId")
-    private Distributor distributor;
+    @JoinColumn(name = "contractId")
+    private Contract contract;
 
     // 날짜
     @Column
@@ -37,9 +31,8 @@ public class Revenue {
     private Double fee;
 
     @Builder
-    public Revenue(Ost ost, Distributor distributor, LocalDateTime date, Double fee) {
-        this.ost = ost;
-        this.distributor = distributor;
+    public Revenue(Contract contract, LocalDateTime date, Double fee) {
+        this.contract = contract;
         this.date = date;
         this.fee = fee;
     }

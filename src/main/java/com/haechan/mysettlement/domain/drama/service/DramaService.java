@@ -15,7 +15,7 @@ public class DramaService {
     public void register(DramaDto dramaDto) {
 
         Drama drama = Drama.builder()
-                .name(dramaDto.getTitle())
+                .title(dramaDto.getTitle())
                 .build();
 
         dramaRepository.save(drama);
