@@ -1,5 +1,6 @@
 package com.haechan.mysettlement.global.batch;
 
+import com.haechan.mysettlement.domain.settlement.SettlementJobConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
@@ -20,13 +21,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SettlementScheduler {
     private final JobLauncher jobLauncher;
-    private final SettlementJob settlementJob;
+    private final SettlementJobConfig settlementJob;
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
     // 매달 1일 새벽 2시 정산
-    // settlement에서
-    @Scheduled(cron = "0 0 1 1 * *")
+    @Scheduled(cron = "0 0 2 1 * *")
     public void runJob() {
 
         // job parameter 설정
@@ -35,7 +35,7 @@ public class SettlementScheduler {
         JobParameters jobParameters = new JobParameters();
 
         try {
-            jobLauncher.run(settlementJob.settlementJob_batchBuild(jobRepository, transactionManager), jobParameters);
+            jobLauncher.run(settlementJob.settlement_batchBuild(jobRepository, transactionManager), jobParameters);
         } catch (JobInstanceAlreadyCompleteException | JobParametersInvalidException |
                  JobRestartException | JobExecutionAlreadyRunningException e) {
             System.out.println(e.getMessage());
