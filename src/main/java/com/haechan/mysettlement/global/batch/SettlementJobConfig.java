@@ -1,4 +1,4 @@
-package com.haechan.mysettlement.domain.settlement;
+package com.haechan.mysettlement.global.batch;
 
 import com.haechan.mysettlement.domain.contract.entity.Contract;
 import com.haechan.mysettlement.domain.revenue.dto.RevenueDto;

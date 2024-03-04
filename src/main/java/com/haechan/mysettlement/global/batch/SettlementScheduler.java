@@ -1,6 +1,5 @@
 package com.haechan.mysettlement.global.batch;
 
-import com.haechan.mysettlement.domain.settlement.SettlementJobConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
