@@ -6,6 +6,7 @@ import com.haechan.mysettlement.domain.revenue.entity.Revenue;
 import com.haechan.mysettlement.domain.revenue.repository.RevenueRepository;
 import com.haechan.mysettlement.domain.settlement.entity.Settlement;
 import com.haechan.mysettlement.domain.settlement.repository.SettlementRepository;
+import com.haechan.mysettlement.global.batch.SettlementListWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -17,9 +18,7 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.data.RepositoryItemReader;
-import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
-import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
@@ -27,7 +26,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -55,7 +56,7 @@ public class SettlementJobConfig {
         System.out.println("스텝");
         return new StepBuilder("settlement_batchStep", jobRepository)
                 // I, O
-                .<Revenue, Settlement>chunk(chunkSize, transactionManager)
+                .<Revenue, List<Settlement>>chunk(chunkSize, transactionManager)
                 .reader(settlementReader())
                 .processor(getFeeProcessor())
                 .writer(settlementWriter())
@@ -85,12 +86,11 @@ public class SettlementJobConfig {
     }
 
     // processor
-    // settlement.calculate를 여기에??
     @Bean
     @StepScope
     // input output
     // Revenue 타입 리더에서 읽고 프로세서에서 프로세스 후 Settlement 타입으로 라이터에게 리턴
-    public ItemProcessor<Revenue, Settlement> getFeeProcessor() {
+    public ItemProcessor<Revenue, List<Settlement>> getFeeProcessor() {
 
         System.out.println("2. 프로세서 실행");
 
@@ -114,6 +114,9 @@ public class SettlementJobConfig {
             Double fee = dto.getFee();
             log.info("fee = " + fee);
 
+            // 4개 settlement 객체 저장할 리스트
+            List<Settlement> settlementList = new ArrayList<>();
+
             // 1. 유통사 정산
             Double distributorRate = contract.getDistributor().getPercent() * 0.01;
             log.info("distributorRate = {}", distributorRate);
@@ -134,19 +137,64 @@ public class SettlementJobConfig {
             log.info("distributorSettlement.getFee() = {}", distributorSettlement.getFee());
             log.info("distributorSettlement.getSettleDate() = {}", distributorSettlement.getSettleDate());
 
-            return distributorSettlement;
+            settlementList.add(distributorSettlement);
+
+            // 2. 가창자 정산
+            Double singerRate = contract.getSingerPercent() * 0.01;
+            Double singerFee = fee * singerRate;
+            fee -= singerFee;
+
+            Settlement singerSettlement = Settlement.builder()
+                    .contract(contract)
+                    .type(2L)
+                    .memberId(contract.getOst().getSinger().getId())
+                    .settleDate(LocalDateTime.now())
+                    .fee(singerFee)
+                    .build();
+
+            settlementList.add(singerSettlement);
+
+            // 제작사 정산
+            Double producerRate = contract.getProducerPercent() * 0.01;
+            log.info("producerRate = {}", producerRate);
+            Double producerFee = fee * producerRate;
+            log.info("producerFee = {}", producerFee);
+            fee -= producerFee;
+
+            Settlement producerSettlement = Settlement.builder()
+                    .contract(contract)
+                    .type(3L)
+                    .memberId(contract.getOst().getProducer().getId())
+                    .settleDate(LocalDateTime.now())
+                    .fee(producerFee)
+                    .build();
+
+            settlementList.add(producerSettlement);
+
+            // 본사 정산
+            Settlement companySettlement = Settlement.builder()
+                    .contract(contract)
+                    .type(0L)
+                    .memberId(0L)
+                    .settleDate(LocalDateTime.now())
+                    .fee(fee)
+                    .build();
+
+            settlementList.add(companySettlement);
+
+            // 정산이 완료된 `Settlement` 객체 리스트 반환
+            return settlementList;
         };
     }
 
+    // RepositoryItemWriter는 하나의 엔티티 저장
+    // but Revenue 하나 당 Settlement 객체 4개 담긴 리스트 저장해야 하므로 커스텀 ItemWriter 사용
     @Bean
     @StepScope
-    public RepositoryItemWriter<Settlement> settlementWriter() {
+    public SettlementListWriter settlementWriter() {
 
         System.out.println("3. 라이터");
 
-        // 메소드명 없을 시 saveAll
-        return new RepositoryItemWriterBuilder<Settlement>()
-                .repository(settlementRepository)
-                .build();
+        return new SettlementListWriter(settlementRepository);
     }
 }
