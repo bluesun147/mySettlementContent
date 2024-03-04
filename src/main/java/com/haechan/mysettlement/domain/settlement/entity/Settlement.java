@@ -22,7 +22,7 @@ public class Settlement {
     private Long id;
 
     // 계약서
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contractId")
     private Contract contract;
 

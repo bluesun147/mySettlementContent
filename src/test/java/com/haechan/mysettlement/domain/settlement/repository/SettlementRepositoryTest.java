@@ -16,6 +16,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,6 +44,9 @@ public class SettlementRepositoryTest {
         em = testEntityManager.getEntityManager();
     }
 
+    @Autowired
+    private SettlementRepository settlementRepository;
+
     @Test
     @DisplayName("특정월 특정 멤버(유통사, 가창자, 제작사, 본사) 찾기")
     void findByTypeAndMemberIdAndSettleDate() {
@@ -60,5 +66,14 @@ public class SettlementRepositoryTest {
 
         assertThat(settlementList.size()).isEqualTo(3);
         assertThat(settlementList.get(0).getType()).isEqualTo(type);
+    }
+
+    @Test
+    void findAll() {
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<Settlement> all = settlementRepository.findAll(pageable);
+
+        System.out.println("all = " + all);
+
     }
 }
