@@ -3,13 +3,14 @@ package com.haechan.mysettlement.domain.Stock;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@ToString
 public class Stock {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long productId;
     private Long quantity;
