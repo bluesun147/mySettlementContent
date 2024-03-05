@@ -108,4 +108,26 @@ public class SettlementService {
     public Double getDistributorSettlement(Long type, Long id, LocalDate date) {
         return settlementRepository.findByTypeAndMemberIdAndSettleDate(type, id, date);
     }
+
+    // 동시성 문제 테스트
+    // private String nameStore;
+    private ThreadLocal<String> nameStore = new ThreadLocal<>();
+    public String saveAndFind(String name) {
+        log.info("(save) saved value : nameStore = {}, to be saved : name = {}", nameStore.get(), name);
+        nameStore.set(name);
+        // 저장 로직에 1초가 걸리고, 그 후 조회
+        sleep(1000);
+        log.info("(get) saved value = {}", nameStore.get());
+        // 해당 스레드가 스레드 로컬 모두 사용 후 저장된 값 제거해야 함.
+        nameStore.remove();
+        return nameStore.get();
+    }
+
+    public void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
