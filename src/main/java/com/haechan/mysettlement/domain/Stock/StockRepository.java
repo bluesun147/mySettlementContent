@@ -22,4 +22,26 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     @Query("select s from Stock s where s.id = :id")
     Stock findByWithPessimisticLock(@Param("id") final Long id);
+
+    /*
+    2. Optimistic Lock (낙관적 락)
+    실제 락 사용하지 않고 버전 이용해 락과 유사한 과정 갖는 논리적 락
+        1. 2개 스레드에서 동시에 db 접근해 quantity 100, v1인 stock 조회
+            SELECT * FROM stock WHERE id = 1
+        2. 스레드1이 먼저 조회한 stock 업데이트 (q-1, v+1)
+               UPDATE SET quantity=99, ver=ver+1 WHERE id=1 and v=1
+        3. 스레드2가 조회한 stock 업데이트 할때 v=1인 stock 없으므로 예외 발생 (같은 stock 객체 접근 못함)
+        4. 예외 잡아서 재조회하고 v2인 stock 업데이트
+    1~3 과정은 어노테이션 통해서 자동 동작.
+    4로직을 직접 구현해야 함.
+    - 장점
+        충돌 빈번하지 않으면, 별도 락 잡지 않으므로 성능 better
+    - 단점
+        업데이트 실패시 제시작 로직 직접 작성해야 함
+        충돌 빈번하면 롤백 처리 해야 함. 성능 PL보다 bad
+
+    */
+    @Lock(value = LockModeType.OPTIMISTIC)
+    @Query("select s from Stock s where s.id = :id")
+    Stock findByWithOptimisticLock(@Param("id") final Long id);
 }

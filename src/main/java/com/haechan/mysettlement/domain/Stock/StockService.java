@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 // https://thalals.tistory.com/370
+// https://ksh-coding.tistory.com/125
+// https://velog.io/@coconenne/스프링으로-알아보는-동시성-이슈
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +36,13 @@ public class StockService {
     @Transactional
     public void decreasePessimistic(final Long id, final Long quantity) {
         Stock stock = stockRepository.findByWithPessimisticLock(id);
+        stock.decrease(quantity);
+        stockRepository.saveAndFlush(stock);
+    }
+
+    @Transactional
+    public void decreaseOptimistic(final Long id, final Long quantity) {
+        Stock stock = stockRepository.findByWithOptimisticLock(id);
         stock.decrease(quantity);
         stockRepository.saveAndFlush(stock);
     }
