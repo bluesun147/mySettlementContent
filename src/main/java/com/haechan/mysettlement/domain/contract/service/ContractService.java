@@ -50,6 +50,15 @@ public class ContractService {
                         .endDate(dto.getEndDate())
                         .build();
 
+                // 이미 있는 계약서인지 확인
+                Optional<Contract> savedContract = contractRepository.findByOstAndDistributor(ost, distributor);
+                System.out.println("savedContract = " + savedContract);
+
+                // 이미 db에 있는 계약서 일 때
+                if (savedContract.isPresent()) {
+                    throw new IOException(INVALID_CONTRACT.getMessage() + " id = " + savedContract.get().getId());
+                }
+
                 contractList.add(contract);
             }
             // db에 저장
