@@ -43,6 +43,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
 	implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.3'
 
+	implementation 'org.springframework.boot:spring-boot-starter-mustache'
+
 	// QueryDsl
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'

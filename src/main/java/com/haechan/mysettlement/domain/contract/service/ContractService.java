@@ -7,20 +7,23 @@ import com.haechan.mysettlement.domain.distributor.entity.Distributor;
 import com.haechan.mysettlement.domain.distributor.repository.DistributorRepository;
 import com.haechan.mysettlement.domain.ost.entity.Ost;
 import com.haechan.mysettlement.domain.ost.repository.OstRepository;
-import com.haechan.mysettlement.domain.producer.entity.Producer;
-import com.haechan.mysettlement.domain.producer.repository.ProducerRepository;
-import com.haechan.mysettlement.domain.singer.entity.Singer;
-import com.haechan.mysettlement.domain.singer.repository.SingerRepository;
+import com.haechan.mysettlement.global.BaseException;
+import com.haechan.mysettlement.global.BaseResponseStatus;
 import com.haechan.mysettlement.global.config.ExcelHelper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static com.haechan.mysettlement.global.BaseResponseStatus.INVALID_CONTRACT;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ContractService {
@@ -51,9 +54,14 @@ public class ContractService {
             }
             // db에 저장
             contractRepository.saveAll(contractList);
+            log.info("save success!");
 
         } catch (IOException e) {
             throw new RuntimeException("fail to store excel data: " + e.getMessage());
         }
+    }
+
+    public List<Contract> getContractList() {
+        return contractRepository.findAll();
     }
 }

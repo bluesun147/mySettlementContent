@@ -55,4 +55,8 @@ public class RevenueService {
             throw new RuntimeException("fail to store excel data: " + e.getMessage());
         }
     }
+
+    public List<Revenue> getRevenueList() {
+        return revenueRepository.findAll();
+    }
 }
