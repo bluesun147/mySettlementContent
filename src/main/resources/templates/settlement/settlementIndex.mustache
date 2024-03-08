@@ -1,0 +1,50 @@
+{{> header}}
+
+<h1>특정 월 특정 멤버의 수익</h1>
+
+<form action="/settlement/member" method="get">
+
+    <select name="year">
+        {{#years}}
+            <option value="{{.}}">{{.}}</option>
+        {{/years}}
+    </select>년
+
+    <select name="month">
+        {{#months}}
+            <option value="{{.}}">{{.}}</option>
+        {{/months}}
+    </select>월
+
+    멤버 타입 : <select name="type">
+        {{#types}}
+            <option value="{{.}}">{{.}}</option>
+        {{/types}}
+    </select>
+
+    멤버 id : <select name="memberId">
+        {{#distributorIdList}}
+            <option value="{{.}}">{{.}}</option>
+        {{/distributorIdList}}
+    </select>
+
+    <button type="submit">확인</button>
+</form>
+
+<script>
+    const typeSelect = document.querySelector('select[name="type"]');
+    const memberIdSelect = document.querySelector('select[name="memberId"]');
+
+    typeSelect.addEventListener('change', () => {
+        const selectedType = typeSelect.value;
+        const memberIds = typeMemberIdMap[selectedType];
+        memberIdSelect.innerHTML = memberIds.map(memberId => `<option value="${memberId}">${memberId}</option>`).join('');
+    });
+
+    const typeMemberIdMap = {
+        DISTRIBUTOR: {{distributorIdList}},
+        SINGER: {{singerIdList}},
+        PRODUCER: {{producerIdList}},
+        COMPANY: [0],
+    };
+</script>
