@@ -12,6 +12,8 @@ import com.haechan.mysettlement.global.BaseResponseStatus;
 import com.haechan.mysettlement.global.config.ExcelHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,7 +72,7 @@ public class ContractService {
         }
     }
 
-    public List<Contract> getContractList() {
-        return contractRepository.findAll();
+    public Page<Contract> getContractList(Pageable pageable) {
+        return contractRepository.findAll(pageable);
     }
 }

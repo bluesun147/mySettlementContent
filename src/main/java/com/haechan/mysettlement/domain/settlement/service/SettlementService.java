@@ -9,6 +9,8 @@ import com.haechan.mysettlement.domain.settlement.entity.Settlement;
 import com.haechan.mysettlement.domain.settlement.repository.SettlementRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -113,7 +115,7 @@ public class SettlementService {
         log.info("type = {}", type.getType());
         log.info("memberId = {}", memberId);
 
-        Double fee = settlementRepository.findByTypeAndMemberIdAndSettleDate(year, month, type, memberId);
+        Double fee = settlementRepository.getSumByTypeAndMemberIdAndSettleDate(year, month, type, memberId);
         log.info("fee = {}", fee);
         return fee;
     }
@@ -140,7 +142,12 @@ public class SettlementService {
         }
     }
 
-    public List<Settlement> getSettlementList() {
-        return settlementRepository.findAll();
+    public Page<Settlement> getSettlementList(Pageable pageable) {
+        return settlementRepository.findAll(pageable);
+    }
+
+    // 특정 월 특정 멤버의 정산 객체
+    public Page<Settlement> getSettlementListByDateAndMember(int year, int month, MemberType type, Long memberId, Pageable pageable) {
+        return settlementRepository.findByTypeAndMemberIdAndSettleDate(year, month, type, memberId, pageable);
     }
 }
