@@ -11,10 +11,15 @@ import com.haechan.mysettlement.domain.singer.dto.SingerHtmlSelectDto;
 import com.haechan.mysettlement.domain.singer.service.SingerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,15 +37,21 @@ public class SettlementController {
     private final SingerService singerService;
     private final ProducerService producerService;
 
-    @GetMapping("/list")
-    public String getSettlementList(Model model) {
-        List<Settlement> settlementList = settlementService.getSettlementList();
-        model.addAttribute("settlementList", settlementList);
-        return "/settlement/settlementList";
-    }
+    private static final int pageSize = 3;
 
     @GetMapping("")
-    public String index(Model model) {
+    public String index(Model model, @PageableDefault(size = pageSize, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        Page<Settlement> settlementList = settlementService.getSettlementList(pageable);
+        model.addAttribute("settlementList", settlementList);
+
+        List<Integer> pageIndex = new ArrayList<>();
+        for (int i=0; i<settlementList.getTotalPages(); i++) {
+            pageIndex.add(i);
+        }
+
+        model.addAttribute("pageIndex", pageIndex);
+
         List<Integer> years = Arrays.asList(2020, 2021, 2022, 2023, 2024, 2025);
         List<Integer> months = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
         List<MemberType> types = Arrays.asList(DISTRIBUTOR, SINGER, PRODUCER, COMPANY);
@@ -67,13 +78,6 @@ public class SettlementController {
         return "/settlement/settlementIndex";
     }
 
-    @PostMapping("/result")
-    public String result(@RequestParam("year") int year, @RequestParam("month") String month, Model model) {
-        model.addAttribute("year", year);
-        model.addAttribute("month", month);
-        return "settlement/result";
-    }
-
     // 특정월 특정 유통사의 수익
     @GetMapping("/member")
     public String getDistributorSettlement(
@@ -81,12 +85,22 @@ public class SettlementController {
             @RequestParam("month") int month,
             @RequestParam("type") MemberType type,
             @RequestParam("memberId") Long memberId,
-            Model model) {
+            Model model,
+            @PageableDefault(size = pageSize, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        Page<Settlement> settlementList = settlementService.getSettlementListByDateAndMember(year, month, type, memberId, pageable);
+        model.addAttribute("settlementList", settlementList);
+
+        List<Integer> pageIndex = new ArrayList<>();
+        for (int i=0; i<settlementList.getTotalPages(); i++) {
+            pageIndex.add(i);
+        }
+
+        model.addAttribute("pageIndex", pageIndex);
 
         // 해당 월 정산금
         Double membersSettlement = settlementService.getMembersSettlement(year, month, type, memberId);
         log.info("membersSettlement = {}", membersSettlement);
-
 
         model.addAttribute("year", year);
         model.addAttribute("month", month);
