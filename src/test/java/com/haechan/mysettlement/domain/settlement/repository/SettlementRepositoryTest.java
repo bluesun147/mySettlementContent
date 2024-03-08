@@ -1,6 +1,7 @@
 package com.haechan.mysettlement.domain.settlement.repository;
 
 import com.haechan.mysettlement.domain.config.TestQueryDslConfig;
+import com.haechan.mysettlement.domain.settlement.dto.MemberType;
 import com.haechan.mysettlement.domain.settlement.entity.QSettlement;
 import com.haechan.mysettlement.domain.settlement.entity.Settlement;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class SettlementRepositoryTest {
         JPAQuery<Settlement> query = new JPAQuery<>(em);
         QSettlement qSettlement = new QSettlement("settlement");
 
-        Long type = 1L;
+        MemberType type = MemberType.DISTRIBUTOR;
         Long memberId = 1L;
         LocalDate date = LocalDate.now();
 

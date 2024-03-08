@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 public class SettlementDto {
 
     private ContractDto contractDto;
-    private Long type;
+    private MemberType type;
     private Long memberId;
     private LocalDateTime settleDate;
     private Double fee;
 
     @Builder
-    public SettlementDto(ContractDto contractDto, Long type, Long memberId, LocalDateTime settleDate, Double fee) {
+    public SettlementDto(ContractDto contractDto, MemberType type, Long memberId, LocalDateTime settleDate, Double fee) {
         this.contractDto = contractDto;
         this.type = type;
         this.memberId = memberId;
