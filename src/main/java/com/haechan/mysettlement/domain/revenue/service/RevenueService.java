@@ -11,6 +11,8 @@ import com.haechan.mysettlement.domain.revenue.dto.RevenueExcelDto;
 import com.haechan.mysettlement.domain.revenue.entity.Revenue;
 import com.haechan.mysettlement.domain.revenue.repository.RevenueRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,7 +58,7 @@ public class RevenueService {
         }
     }
 
-    public List<Revenue> getRevenueList() {
-        return revenueRepository.findAll();
+    public Page<Revenue> getRevenueList(Pageable pageable) {
+        return revenueRepository.findAll(pageable);
     }
 }
