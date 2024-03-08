@@ -1,0 +1,32 @@
+{{> header}}
+
+<h1>정산 목록</h1>
+
+<table border="1">
+    <thead style="background-color: lightcoral">
+    <tr>
+        <th>ID</th>
+        <th>계약서</th>
+        <th>정산 멤버 타입</th>
+        <th>정산 대상</th>
+        <th>정산일</th>
+        <th>정산금</th>
+        <th>생성일</th>
+        <th>업데이트일</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#settlementList}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{contract.id}}</td>
+            <td>{{type}}</td>
+            <td>{{memberId}}</td>
+            <td>{{settleDate}}</td>
+            <td>{{fee}}</td>
+            <td>{{createdAt}}</td>
+            <td>{{updatedAt}}</td>
+        </tr>
+    {{/settlementList}}
+    </tbody>
+</table>

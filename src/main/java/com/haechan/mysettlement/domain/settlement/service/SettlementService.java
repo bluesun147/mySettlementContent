@@ -4,6 +4,7 @@ import com.haechan.mysettlement.domain.contract.entity.Contract;
 import com.haechan.mysettlement.domain.revenue.dto.RevenueDto;
 import com.haechan.mysettlement.domain.revenue.entity.Revenue;
 import com.haechan.mysettlement.domain.revenue.repository.RevenueRepository;
+import com.haechan.mysettlement.domain.settlement.dto.MemberType;
 import com.haechan.mysettlement.domain.settlement.entity.Settlement;
 import com.haechan.mysettlement.domain.settlement.repository.SettlementRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.haechan.mysettlement.domain.settlement.dto.MemberType.*;
 
 
 @Slf4j
@@ -52,7 +55,7 @@ public class SettlementService {
 
             Settlement distributorSettlement = Settlement.builder()
                     .contract(contract)
-                    .type(1L)
+                    .type(DISTRIBUTOR)
                     .memberId(contract.getDistributor().getId())
                     .settleDate(LocalDateTime.now())
                     .fee(distributorFee)
@@ -67,7 +70,7 @@ public class SettlementService {
 
             Settlement singerSettlement = Settlement.builder()
                     .contract(contract)
-                    .type(2L)
+                    .type(SINGER)
                     .memberId(contract.getOst().getSinger().getId())
                     .settleDate(LocalDateTime.now())
                     .fee(singerFee)
@@ -82,7 +85,7 @@ public class SettlementService {
 
             Settlement producerSettlement = Settlement.builder()
                     .contract(contract)
-                    .type(3L)
+                    .type(PRODUCER)
                     .memberId(contract.getOst().getProducer().getId())
                     .settleDate(LocalDateTime.now())
                     .fee(producerFee)
@@ -93,7 +96,7 @@ public class SettlementService {
             // 4. 본사 정산
             Settlement companySettlement = Settlement.builder()
                     .contract(contract)
-                    .type(0L)
+                    .type(COMPANY)
                     .memberId(0L)
                     .settleDate(LocalDateTime.now())
                     .fee(fee)
@@ -103,10 +106,16 @@ public class SettlementService {
         }
     }
 
-    // 특정월 특정 멤버(유통사, 가창자, 제작사, 본사)의 수익
-    // type: 1, 2, 3, 0
-    public Double getDistributorSettlement(Long type, Long id, LocalDate date) {
-        return settlementRepository.findByTypeAndMemberIdAndSettleDate(type, id, date);
+    // 특정 월 특정 멤버의 정산금
+    public Double getMembersSettlement(int year, int month, MemberType type, Long memberId) {
+        log.info("year = {}", year);
+        log.info("month = {}", month);
+        log.info("type = {}", type.getType());
+        log.info("memberId = {}", memberId);
+
+        Double fee = settlementRepository.findByTypeAndMemberIdAndSettleDate(year, month, type, memberId);
+        log.info("fee = {}", fee);
+        return fee;
     }
 
     // 동시성 문제 테스트
@@ -129,5 +138,9 @@ public class SettlementService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Settlement> getSettlementList() {
+        return settlementRepository.findAll();
     }
 }

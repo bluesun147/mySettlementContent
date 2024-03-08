@@ -22,13 +22,14 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.haechan.mysettlement.domain.settlement.dto.MemberType.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SettlementServiceTest {
@@ -123,22 +124,22 @@ class SettlementServiceTest {
         // 예상 Settlement 객체 리스트 생성
         List<Settlement> expectedSettlements = Arrays.asList(
                 // 유통사1
-                new Settlement(contract1, 1L, distributor1.getId(), dateTime, 50.0),
+                new Settlement(contract1, DISTRIBUTOR, distributor1.getId(), dateTime, 50.0),
                 // 가창자1
-                new Settlement(contract1, 2L, singer.getId(), dateTime, 5.0),
+                new Settlement(contract1, SINGER, singer.getId(), dateTime, 5.0),
                 // 제작자1
-                new Settlement(contract1, 3L, producer.getId(), dateTime, 22.5),
+                new Settlement(contract1, PRODUCER, producer.getId(), dateTime, 22.5),
                 // 본사1
-                new Settlement(contract1, 0L, 0L, dateTime, 22.5),
+                new Settlement(contract1, COMPANY, 0L, dateTime, 22.5),
 
                 // 유통사2
-                new Settlement(contract2, 1L, distributor2.getId(), dateTime, 80.0),
+                new Settlement(contract2, DISTRIBUTOR, distributor2.getId(), dateTime, 80.0),
                 // 가창자2
-                new Settlement(contract2, 2L, singer.getId(), dateTime, 12.0),
+                new Settlement(contract2, SINGER, singer.getId(), dateTime, 12.0),
                 // 제작자2
-                new Settlement(contract2, 3L, producer.getId(), dateTime, 54.0),
+                new Settlement(contract2, PRODUCER, producer.getId(), dateTime, 54.0),
                 // 본사2
-                new Settlement(contract2, 0L, 0L, dateTime, 54.0)
+                new Settlement(contract2, COMPANY, 0L, dateTime, 54.0)
 
         );
 
@@ -147,6 +148,8 @@ class SettlementServiceTest {
         // ArgumentCaptor: 메소드에 들어가는 인자갑 중간에 가로채서 검증
         ArgumentCaptor<Settlement> settlementCaptor = ArgumentCaptor.forClass(Settlement.class);
 
+        // verify 지우면 밑에도 실행 안됨.
+        // verify에 적힌 메서드의 인자로 들어갔는지 테스트 하는것
         verify(settlementRepository, times(expectedSettlements.size())).save(settlementCaptor.capture());
         List<Settlement> actualSettlements = settlementCaptor.getAllValues();
 
@@ -171,7 +174,38 @@ class SettlementServiceTest {
     }
 
     @Test
-    void getDistributorSettlement() {
+    void mocking() {
+        ArrayList<String> mockList = mock(ArrayList.class);
 
+        System.out.println(mockList.get(0));  // null
+        System.out.println(mockList.size());  // 0
+
+        mockList.add("Test String 1");  // 영향 없음
+        mockList.add("Test String 2");
+
+        System.out.println(mockList.size());  // 0
+
+        when(mockList.size()).thenReturn(5);
+        System.out.println(mockList.size());  // 5
     }
+
+    @Test
+    public void spying() {
+        ArrayList<String> spyList = spy(ArrayList.class);
+
+//        System.out.println(spyList.get(0));  // IndexOutOfBoundsException
+        System.out.println(spyList.size());  // 0
+
+        spyList.add("Test String 1");
+        spyList.add("Test String 2");
+
+        System.out.println(spyList.size());  // 2
+        System.out.println(spyList.get(0));  // Test String 1
+        System.out.println(spyList.get(1));  // Test String 2
+
+        when(spyList.size()).thenReturn(10);  // 행동 재정의
+        System.out.println(spyList.size());  // 10
+    }
+
+
 }

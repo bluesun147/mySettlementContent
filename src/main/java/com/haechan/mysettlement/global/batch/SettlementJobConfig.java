@@ -6,7 +6,6 @@ import com.haechan.mysettlement.domain.revenue.entity.Revenue;
 import com.haechan.mysettlement.domain.revenue.repository.RevenueRepository;
 import com.haechan.mysettlement.domain.settlement.entity.Settlement;
 import com.haechan.mysettlement.domain.settlement.repository.SettlementRepository;
-import com.haechan.mysettlement.global.batch.SettlementListWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -30,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.haechan.mysettlement.domain.settlement.dto.MemberType.*;
+
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
@@ -44,7 +45,7 @@ public class SettlementJobConfig {
     @Bean
     public Job settlement_batchBuild(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         System.out.println("잡");
-        return new JobBuilder("settlement_batchBuild", jobRepository)
+        return new JobBuilder("settlement_batchBuild0308", jobRepository)
                 .start(settlement_batchStep(jobRepository, transactionManager))
                 .build();
     }
@@ -54,7 +55,7 @@ public class SettlementJobConfig {
     @JobScope
     public Step settlement_batchStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         System.out.println("스텝");
-        return new StepBuilder("settlement_batchStep", jobRepository)
+        return new StepBuilder("settlement_batchStep0308", jobRepository)
                 // I, O
                 .<Revenue, List<Settlement>>chunk(chunkSize, transactionManager)
                 .reader(settlementReader())
@@ -128,7 +129,7 @@ public class SettlementJobConfig {
 
             Settlement distributorSettlement = Settlement.builder()
                     .contract(contract)
-                    .type(1L)
+                    .type(DISTRIBUTOR)
                     .memberId(contract.getDistributor().getId())
                     .settleDate(LocalDateTime.now())
                     .fee(distributorFee)
@@ -146,7 +147,7 @@ public class SettlementJobConfig {
 
             Settlement singerSettlement = Settlement.builder()
                     .contract(contract)
-                    .type(2L)
+                    .type(SINGER)
                     .memberId(contract.getOst().getSinger().getId())
                     .settleDate(LocalDateTime.now())
                     .fee(singerFee)
@@ -163,7 +164,7 @@ public class SettlementJobConfig {
 
             Settlement producerSettlement = Settlement.builder()
                     .contract(contract)
-                    .type(3L)
+                    .type(PRODUCER)
                     .memberId(contract.getOst().getProducer().getId())
                     .settleDate(LocalDateTime.now())
                     .fee(producerFee)
@@ -174,7 +175,7 @@ public class SettlementJobConfig {
             // 본사 정산
             Settlement companySettlement = Settlement.builder()
                     .contract(contract)
-                    .type(0L)
+                    .type(COMPANY)
                     .memberId(0L)
                     .settleDate(LocalDateTime.now())
                     .fee(fee)

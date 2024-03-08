@@ -3,11 +3,14 @@ package com.haechan.mysettlement.domain.revenue.entity;
 import com.haechan.mysettlement.domain.contract.entity.Contract;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 // 수익 계산서
 
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -29,6 +32,11 @@ public class Revenue {
     // 수익
     @Column
     private Double fee;
+
+    // 생성 날짜
+    @Column
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Builder
     public Revenue(Contract contract, LocalDateTime date, Double fee) {

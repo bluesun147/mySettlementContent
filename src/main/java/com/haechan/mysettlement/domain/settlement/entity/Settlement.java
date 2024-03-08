@@ -1,6 +1,7 @@
 package com.haechan.mysettlement.domain.settlement.entity;
 
 import com.haechan.mysettlement.domain.contract.entity.Contract;
+import com.haechan.mysettlement.domain.settlement.dto.MemberType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,7 +31,7 @@ public class Settlement {
     // 추후에 enum 으로 변경해야 함.
     // 1-제작사 2-유통사 3-가창자
     @Column
-    private Long type;
+    private MemberType type;
 
     // 정산 대상 id
     @Column
@@ -55,7 +56,7 @@ public class Settlement {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Settlement(Contract contract, Long type, Long memberId, LocalDateTime settleDate, Double fee) {
+    public Settlement(Contract contract, MemberType type, Long memberId, LocalDateTime settleDate, Double fee) {
         this.contract = contract;
         this.type = type;
         this.memberId = memberId;

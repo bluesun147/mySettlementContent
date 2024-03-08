@@ -1,7 +1,7 @@
 package com.haechan.mysettlement.domain.settlement.repository;
 
-import java.time.LocalDate;
+import com.haechan.mysettlement.domain.settlement.dto.MemberType;
 
 public interface SettlementRepositoryCustom {
-    Double findByTypeAndMemberIdAndSettleDate(Long type, Long memberId, LocalDate date);
+    Double findByTypeAndMemberIdAndSettleDate(int year, int month, MemberType type, Long memberId);
 }
