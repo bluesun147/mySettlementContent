@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/ost")
+@RequestMapping("/content/ost")
 @RequiredArgsConstructor
 public class OstController {
 

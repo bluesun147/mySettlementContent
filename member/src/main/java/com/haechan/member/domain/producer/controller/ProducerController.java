@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/producer")
+@RequestMapping("/member/producer")
 @RequiredArgsConstructor
 public class ProducerController {
 
@@ -21,7 +21,7 @@ public class ProducerController {
     // ost등 다른 서버에서 producer 정보 API 통해 가져와야 함
     // memberId와 producerId가 다를 수 있다고 가정 (지금은 같음)
     @GetMapping
-    public ProducerFeignResponse findProducerById(@RequestParam("memberId") Long memberId) {
+    public ProducerFeignResponse findProducerById(@RequestParam(value = "memberId") Long memberId) {
         return producerService.findProducerById(memberId);
     }
 }

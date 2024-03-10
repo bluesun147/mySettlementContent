@@ -31,8 +31,10 @@ public class OstService {
         Drama drama = dramaRepository.findById(dramaId).orElseThrow();
 
         Long producerId = ostRegisterDto.getProducerId();
+        log.info("(OstService) producerId = {}", producerId);
 
         Long singerId = ostRegisterDto.getSingerId();
+        log.info("(OstService) singerId = {}", singerId);
 
         ProducerFeignResponse producerFeignResponse = producerFeignClient.findProducerById(producerId);
         log.info("producerFeignResponse.getProducerId() = {}", producerFeignResponse.getProducerId());
