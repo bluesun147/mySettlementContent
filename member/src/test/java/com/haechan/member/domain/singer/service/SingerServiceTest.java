@@ -1,9 +1,9 @@
-package com.haechan.mysettlement.singer.service;
+package com.haechan.member.domain.singer.service;
 
-import com.haechan.mysettlement.domain.singer.dto.SingerDto;
-import com.haechan.mysettlement.domain.singer.entity.Singer;
-import com.haechan.mysettlement.domain.singer.repository.SingerRepository;
-import com.haechan.mysettlement.domain.singer.service.SingerService;
+import com.haechan.member.domain.singer.dto.SingerDto;
+import com.haechan.member.domain.singer.entity.Singer;
+import com.haechan.member.domain.singer.repository.SingerRepository;
+import com.haechan.member.domain.singer.service.SingerService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
