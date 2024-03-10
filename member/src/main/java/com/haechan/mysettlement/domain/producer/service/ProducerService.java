@@ -2,12 +2,14 @@ package com.haechan.mysettlement.domain.producer.service;
 
 import com.haechan.mysettlement.domain.producer.dto.ProducerDto;
 import com.haechan.mysettlement.domain.producer.dto.ProducerHtmlSelectDto;
+import com.haechan.mysettlement.domain.producer.feign.ProducerFeignResponse;
 import com.haechan.mysettlement.domain.producer.repository.ProducerRepository;
 import com.haechan.mysettlement.domain.producer.entity.Producer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,5 +37,11 @@ public class ProducerService {
                 )
                 .collect(Collectors.toList());
         return producerDtoList;
+    }
+
+    // ost등 다른 서버에서 producer 정보 API 통해 가져와야 함
+    public ProducerFeignResponse findProducerById(Long producerId) {
+        Producer producer = producerRepository.findById(producerId).orElseThrow();
+        return new ProducerFeignResponse(producer.getId(), producer.getName());
     }
 }

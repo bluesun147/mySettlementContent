@@ -1,8 +1,6 @@
 package com.haechan.mysettlement.domain.ost.entity;
 
 import com.haechan.mysettlement.domain.drama.entity.Drama;
-import com.haechan.mysettlement.domain.producer.entity.Producer;
-import com.haechan.mysettlement.domain.singer.entity.Singer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,25 +18,22 @@ public class Ost {
     @JoinColumn(name = "dramaId")
     private Drama drama;
 
+    // 간접 참조로 변경
     // 제작사
-    @ManyToOne
-    @JoinColumn(name = "producerId")
-    private Producer producer;
+    private Long producerId;
 
     // 가창자
-    @ManyToOne
-    @JoinColumn(name = "singerId")
-    private Singer singer;
+    private Long singerId;
 
     // ost 제목
     @Column
     private String title;
 
     @Builder
-    public Ost(Drama drama, Producer producer, Singer singer, String title) {
+    public Ost(Drama drama, Long producerId, Long singerId, String title) {
         this.drama = drama;
-        this.producer = producer;
-        this.singer = singer;
+        this.producerId = producerId;
+        this.singerId = singerId;
         this.title = title;
     }
 
