@@ -3,6 +3,7 @@ package com.haechan.member.domain.distributor.service;
 import com.haechan.member.domain.distributor.dto.DistributorDto;
 import com.haechan.member.domain.distributor.dto.DistributorHtmlSelectDto;
 import com.haechan.member.domain.distributor.entity.Distributor;
+import com.haechan.member.domain.distributor.feign.DistributorFeignResponse;
 import com.haechan.member.domain.distributor.repository.DistributorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,10 @@ public class DistributorService {
                 )
                 .collect(Collectors.toList());
         return distributorDtoList;
+    }
+
+    public DistributorFeignResponse findDistributorById(Long distributorId) {
+        Distributor distributor = distributorRepository.findById(distributorId).orElseThrow();
+        return new DistributorFeignResponse(distributor.getId(), distributor.getName());
     }
 }

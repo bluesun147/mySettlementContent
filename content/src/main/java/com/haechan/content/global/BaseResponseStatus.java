@@ -17,6 +17,8 @@ public enum BaseResponseStatus {
 
     INVALID_CONTRACT(false, 3001, "이미 존재하는 계약서 입니다."),
 
+    NON_EXIST_OST(false, 3003, "존재하지 않는 ost 입니다."),
+
     /**
      * 4000: DB, Server 오류
      */
