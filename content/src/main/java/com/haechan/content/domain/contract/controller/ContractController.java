@@ -15,16 +15,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 
-//@RestController
 @Controller
-@RequestMapping("/contract")
+@RequestMapping("/content/contract")
 @RequiredArgsConstructor
 public class ContractController {
 
     private final ContractService contractService;
     private static final int pageSize = 3;
 
-    @GetMapping("")
+    @GetMapping("/list")
     public String index(Model model, @PageableDefault(size = pageSize, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<Contract> contractList = contractService.getContractList(pageable);
         model.addAttribute("contractList", contractList);
@@ -42,6 +41,6 @@ public class ContractController {
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         contractService.uploadFile(file);
 
-        return "redirect:/contract?page=0";
+        return "redirect:/content/contract/list?page=0";
     }
 }

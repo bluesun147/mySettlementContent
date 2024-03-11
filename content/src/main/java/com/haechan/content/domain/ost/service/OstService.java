@@ -3,12 +3,9 @@ package com.haechan.content.domain.ost.service;
 import com.haechan.content.domain.ost.dto.OstRegisterDto;
 import com.haechan.content.domain.drama.entity.Drama;
 import com.haechan.content.domain.drama.repository.DramaRepository;
-import com.haechan.content.global.feign.ProducerFeignClient;
-import com.haechan.content.global.feign.ProducerFeignResponse;
+import com.haechan.content.global.feign.*;
 import com.haechan.content.domain.ost.entity.Ost;
 import com.haechan.content.domain.ost.repository.OstRepository;
-import com.haechan.content.global.feign.SingerFeignClient;
-import com.haechan.content.global.feign.SingerFeignResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -52,5 +49,10 @@ public class OstService {
                 .build();
 
         ostRepository.save(ost);
+    }
+
+    public OstFeignResponse findOstById(Long memberId) {
+        Ost ost = ostRepository.findById(memberId).orElseThrow();
+        return new OstFeignResponse(ost.getId(), ost.getTitle());
     }
 }

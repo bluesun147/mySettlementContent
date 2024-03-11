@@ -2,7 +2,7 @@
 
 <h1>수익계산서 엑셀 파일 업로드</h1>
 
-<form action="/revenue/upload" method="post" enctype="multipart/form-data">
+<form action="/finance/revenue/upload" method="post" enctype="multipart/form-data">
     <input type="file" name="file" accept=".xlsx">
     <button type="submit">등록</button>
 </form>
@@ -25,7 +25,7 @@
     {{#revenueList}}
         <tr>
             <td>{{id}}</td>
-            <td>{{contract.id}}</td>
+            <td>{{contractId}}</td>
             <td>{{date}}</td>
             <td>{{fee}}</td>
             <td>{{createdAt}}</td>
@@ -43,7 +43,7 @@
 <ul class="pagination">
     <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
     {{#pageIndex}}
-        <li class="page-item"><a class="page-link" href="/revenue?page={{.}}">{{.}}</a></li>
+        <li class="page-item"><a class="page-link" href="/finance/revenue/list?page={{.}}">{{.}}</a></li>
     {{/pageIndex}}
     <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
 </ul>

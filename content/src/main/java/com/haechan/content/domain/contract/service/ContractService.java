@@ -6,6 +6,7 @@ import com.haechan.content.domain.contract.repository.ContractRepository;
 import com.haechan.content.domain.ost.entity.Ost;
 import com.haechan.content.domain.ost.repository.OstRepository;
 import com.haechan.content.global.config.ExcelHelper;
+import com.haechan.content.global.feign.ContractFeignResponse;
 import com.haechan.content.global.feign.DistributorFeignClient;
 import com.haechan.content.global.feign.DistributorFeignResponse;
 import lombok.RequiredArgsConstructor;
@@ -82,5 +83,16 @@ public class ContractService {
 
     public Page<Contract> getContractList(Pageable pageable) {
         return contractRepository.findAll(pageable);
+    }
+
+    public ContractFeignResponse findContractById(Long ostMemberId, Long distributorMemberId) {
+
+        Ost ost = ostRepository.findById(ostMemberId).orElseThrow();
+        log.info("ost.getTitle() = {}", ost.getTitle());
+
+        Contract contract = contractRepository.findByOstAndDistributorId(ost, distributorMemberId).orElseThrow();
+        log.info("contract.getId() = {}", contract.getId());
+
+        return new ContractFeignResponse(contract.getId(), contract.getProducerPercent(), contract.getSingerPercent());
     }
 }
