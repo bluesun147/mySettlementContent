@@ -1,9 +1,9 @@
 package com.haechan.member.domain.distributor.service;
 
+import com.haechan.feign.dto.DistributorFeignResponse;
 import com.haechan.member.domain.distributor.dto.DistributorDto;
 import com.haechan.member.domain.distributor.dto.DistributorHtmlSelectDto;
 import com.haechan.member.domain.distributor.entity.Distributor;
-import com.haechan.member.domain.distributor.feign.DistributorFeignResponse;
 import com.haechan.member.domain.distributor.repository.DistributorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

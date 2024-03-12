@@ -1,7 +1,7 @@
 package com.haechan.content.domain.contract.controller;
 
 import com.haechan.content.domain.contract.service.ContractService;
-import com.haechan.content.global.feign.ContractFeignResponse;
+import com.haechan.feign.dto.ContractFeignResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

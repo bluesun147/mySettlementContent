@@ -1,5 +1,6 @@
-package com.haechan.finance.global.feign;
+package com.haechan.finance.domain.revenue.feign;
 
+import com.haechan.feign.dto.OstFeignResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

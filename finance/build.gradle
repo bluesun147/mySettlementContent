@@ -57,6 +57,9 @@ dependencies {
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	// myFeignDto jar library
+	implementation files('feign-0.0.11.jar')
 }
 
 dependencyManagement {

@@ -58,6 +58,9 @@ dependencies {
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+	// myFeignDto jar library
+	implementation files('feign-0.0.11.jar')
 }
 
 dependencyManagement {

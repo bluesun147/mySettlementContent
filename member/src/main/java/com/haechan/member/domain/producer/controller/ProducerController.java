@@ -1,7 +1,7 @@
 package com.haechan.member.domain.producer.controller;
 
+import com.haechan.feign.dto.ProducerFeignResponse;
 import com.haechan.member.domain.producer.dto.ProducerDto;
-import com.haechan.member.domain.producer.feign.ProducerFeignResponse;
 import com.haechan.member.domain.producer.service.ProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

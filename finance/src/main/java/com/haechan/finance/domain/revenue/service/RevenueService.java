@@ -1,15 +1,13 @@
 package com.haechan.finance.domain.revenue.service;
 
+import com.haechan.feign.dto.*;
 import com.haechan.finance.domain.revenue.dto.RevenueExcelDto;
+import com.haechan.finance.domain.revenue.feign.OstFeignClient;
+import com.haechan.finance.domain.revenue.feign.DistributorFeignClient;
+import com.haechan.finance.domain.revenue.feign.ContractFeignClient;
 import com.haechan.finance.domain.revenue.entity.Revenue;
 import com.haechan.finance.domain.revenue.repository.RevenueRepository;
 import com.haechan.finance.global.config.ExcelHelper;
-import com.haechan.finance.global.feign.ContractFeignClient;
-import com.haechan.finance.global.feign.ContractFeignResponse;
-import com.haechan.finance.global.feign.DistributorFeignResponse;
-import com.haechan.finance.global.feign.OstFeignClient;
-import com.haechan.finance.global.feign.DistributorFeignClient;
-import com.haechan.finance.global.feign.OstFeignResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,7 @@
 package com.haechan.member.domain.singer.controller;
 
+import com.haechan.feign.dto.SingerFeignResponse;
 import com.haechan.member.domain.singer.dto.SingerDto;
-import com.haechan.member.domain.singer.feign.SingerFeignResponse;
 import com.haechan.member.domain.singer.service.SingerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

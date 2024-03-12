@@ -1,9 +1,9 @@
 package com.haechan.member.domain.singer.service;
 
+import com.haechan.feign.dto.SingerFeignResponse;
 import com.haechan.member.domain.singer.dto.SingerDto;
 import com.haechan.member.domain.singer.dto.SingerHtmlSelectDto;
 import com.haechan.member.domain.singer.entity.Singer;
-import com.haechan.member.domain.singer.feign.SingerFeignResponse;
 import com.haechan.member.domain.singer.repository.SingerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

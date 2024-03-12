@@ -2,7 +2,7 @@ package com.haechan.content.domain.ost.controller;
 
 import com.haechan.content.domain.ost.dto.OstRegisterDto;
 import com.haechan.content.domain.ost.service.OstService;
-import com.haechan.content.global.feign.OstFeignResponse;
+import com.haechan.feign.dto.OstFeignResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

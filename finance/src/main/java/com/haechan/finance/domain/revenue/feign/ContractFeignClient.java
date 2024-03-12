@@ -1,5 +1,6 @@
-package com.haechan.content.global.feign;
+package com.haechan.finance.domain.revenue.feign;
 
+import com.haechan.feign.dto.ContractFeignResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,5 +15,5 @@ public interface ContractFeignClient {
 //    OstFeignResponse findContractById(@RequestParam(value = "memberId") Long memberId);
 
     @GetMapping
-    ContractFeignResponse findByOstIdAndDistributorId(@RequestParam(value = "ostId") Long ostId, @RequestParam(value = "distributorId") Long distributorId);
+    ContractFeignResponse findByOstIdAndDistributorId(@RequestParam(value = "ostMemberId") Long ostMemberId, @RequestParam(value = "distributorMemberId") Long distributorMemberId);
 }

@@ -1,8 +1,8 @@
 package com.haechan.member.domain.producer.service;
 
+import com.haechan.feign.dto.ProducerFeignResponse;
 import com.haechan.member.domain.producer.dto.ProducerDto;
 import com.haechan.member.domain.producer.dto.ProducerHtmlSelectDto;
-import com.haechan.member.domain.producer.feign.ProducerFeignResponse;
 import com.haechan.member.domain.producer.repository.ProducerRepository;
 import com.haechan.member.domain.producer.entity.Producer;
 import lombok.RequiredArgsConstructor;

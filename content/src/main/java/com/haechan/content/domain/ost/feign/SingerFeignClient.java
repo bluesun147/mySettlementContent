@@ -1,5 +1,6 @@
-package com.haechan.content.global.feign;
+package com.haechan.content.domain.ost.feign;
 
+import com.haechan.feign.dto.SingerFeignResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

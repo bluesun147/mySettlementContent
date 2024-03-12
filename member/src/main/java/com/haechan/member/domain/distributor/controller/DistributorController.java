@@ -1,7 +1,7 @@
 package com.haechan.member.domain.distributor.controller;
 
+import com.haechan.feign.dto.DistributorFeignResponse;
 import com.haechan.member.domain.distributor.dto.DistributorDto;
-import com.haechan.member.domain.distributor.feign.DistributorFeignResponse;
 import com.haechan.member.domain.distributor.service.DistributorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
