@@ -90,9 +90,36 @@ public class ContractService {
         Ost ost = ostRepository.findById(ostMemberId).orElseThrow();
         log.info("ost.getTitle() = {}", ost.getTitle());
 
+
         Contract contract = contractRepository.findByOstAndDistributorId(ost, distributorMemberId).orElseThrow();
         log.info("contract.getId() = {}", contract.getId());
 
-        return new ContractFeignResponse(contract.getId(), contract.getProducerPercent(), contract.getSingerPercent());
+        // return new ContractFeignResponse(contract.getId(), contract.getProducerPercent(), contract.getSingerPercent());
+
+        return ContractFeignResponse.builder()
+                .contractId(contract.getId())
+                .distributorId(contract.getDistributorId())
+                .producerPercent(contract.getProducerPercent())
+                .singerPercent(contract.getSingerPercent())
+                .startDate(contract.getStartDate())
+                .endDate(contract.getEndDate())
+                .build();
+
+    }
+
+    public ContractFeignResponse findContractById(Long memberId) {
+
+        Contract contract = contractRepository.findById(memberId).orElseThrow();
+        log.info("contract.getId() = {}", contract.getId());
+
+        // return new ContractFeignResponse(contract.getId(), contract.getProducerPercent(), contract.getSingerPercent());
+        return ContractFeignResponse.builder()
+                .contractId(contract.getId())
+                .distributorId(contract.getDistributorId())
+                .producerPercent(contract.getProducerPercent())
+                .singerPercent(contract.getSingerPercent())
+                .startDate(contract.getStartDate())
+                .endDate(contract.getEndDate())
+                .build();
     }
 }

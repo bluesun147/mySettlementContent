@@ -43,4 +43,14 @@ public class SingerService {
         Singer singer = singerRepository.findById(singerId).orElseThrow();
         return new SingerFeignResponse(singer.getId(), singer.getName());
     }
+
+    public List<SingerFeignResponse> findAll() {
+        List<Singer> singerList = singerRepository.findAll();
+
+        List<SingerFeignResponse> singerFeignList = singerList.stream()
+                .map(singer -> new SingerFeignResponse(singer.getId(), singer.getName()))
+                .collect(Collectors.toList());
+
+        return singerFeignList;
+    }
 }

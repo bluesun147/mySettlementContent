@@ -6,6 +6,8 @@ import com.haechan.member.domain.singer.service.SingerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/member/singer")
 @RequiredArgsConstructor
@@ -23,5 +25,10 @@ public class SingerController {
     @GetMapping
     public SingerFeignResponse findSingerById(@RequestParam(value = "memberId") Long memberId) {
         return singerService.findSingerById(memberId);
+    }
+
+    @GetMapping("/list")
+    public List<SingerFeignResponse> findAll() {
+        return singerService.findAll();
     }
 }

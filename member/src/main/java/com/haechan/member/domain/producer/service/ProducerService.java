@@ -48,4 +48,14 @@ public class ProducerService {
         log.info("producer.getName() = {}", producer.getName());
         return new ProducerFeignResponse(producer.getId(), producer.getName());
     }
+
+    public List<ProducerFeignResponse> findAll() {
+        List<Producer> producerList = producerRepository.findAll();
+
+        List<ProducerFeignResponse> producerFeignList = producerList.stream()
+                .map(producer -> new ProducerFeignResponse(producer.getId(), producer.getName()))
+                .collect(Collectors.toList());
+
+        return producerFeignList;
+    }
 }

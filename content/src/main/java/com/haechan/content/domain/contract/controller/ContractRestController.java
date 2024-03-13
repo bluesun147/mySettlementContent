@@ -17,4 +17,9 @@ public class ContractRestController {
     ContractFeignResponse findByOstIdAndDistributorId(@RequestParam(value = "ostMemberId") Long ostMemberId, @RequestParam(value = "distributorMemberId") Long distributorMemberId) {
         return contractService.findContractById(ostMemberId, distributorMemberId);
     }
+
+    @GetMapping("/id")
+    ContractFeignResponse findByContractId(@RequestParam(value = "memberId") Long memberId) {
+        return contractService.findContractById(memberId);
+    }
 }

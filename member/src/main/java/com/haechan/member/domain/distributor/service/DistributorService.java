@@ -41,6 +41,16 @@ public class DistributorService {
 
     public DistributorFeignResponse findDistributorById(Long distributorId) {
         Distributor distributor = distributorRepository.findById(distributorId).orElseThrow();
-        return new DistributorFeignResponse(distributor.getId(), distributor.getName());
+        return new DistributorFeignResponse(distributor.getId(), distributor.getName(), distributor.getPercent());
+    }
+
+    public List<DistributorFeignResponse> findAll() {
+        List<Distributor> distributorList = distributorRepository.findAll();
+
+        List<DistributorFeignResponse> distributorFeignList = distributorList.stream()
+                .map(distributor -> new DistributorFeignResponse(distributor.getId(), distributor.getName(), distributor.getPercent()))
+                .collect(Collectors.toList());
+
+        return distributorFeignList;
     }
 }

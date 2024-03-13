@@ -6,6 +6,8 @@ import com.haechan.member.domain.producer.service.ProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/member/producer")
 @RequiredArgsConstructor
@@ -23,5 +25,10 @@ public class ProducerController {
     @GetMapping
     public ProducerFeignResponse findProducerById(@RequestParam(value = "memberId") Long memberId) {
         return producerService.findProducerById(memberId);
+    }
+
+    @GetMapping("/list")
+    public List<ProducerFeignResponse> findAll() {
+        return producerService.findAll();
     }
 }

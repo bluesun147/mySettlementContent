@@ -23,7 +23,7 @@
     {{#settlementList}}
         <tr>
             <td>{{id}}</td>
-            <td>{{contract.id}}</td>
+            <td>{{contractId}}</td>
             <td>{{type}}</td>
             <td>{{memberId}}%</td>
             <td>{{settleDate}}%</td>
@@ -44,7 +44,7 @@
 <ul class="pagination">
     <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
     {{#pageIndex}}
-        <li class="page-item"><a class="page-link" href="/settlement?page={{.}}">{{.}}</a></li>
+        <li class="page-item"><a class="page-link" href="/finance/settlement?page={{.}}">{{.}}</a></li>
     {{/pageIndex}}
     <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
 </ul>
