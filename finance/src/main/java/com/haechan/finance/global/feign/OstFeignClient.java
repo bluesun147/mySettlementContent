@@ -1,4 +1,4 @@
-package com.haechan.finance.domain.revenue.feign;
+package com.haechan.finance.global.feign;
 
 import com.haechan.feign.dto.OstFeignResponse;
 import org.springframework.cloud.openfeign.FeignClient;
