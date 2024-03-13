@@ -2,6 +2,7 @@ package com.haechan.finance.domain.settlement.service;
 
 import com.haechan.feign.dto.ContractFeignResponse;
 import com.haechan.feign.dto.DistributorFeignResponse;
+import com.haechan.feign.dto.OstFeignResponse;
 import com.haechan.finance.domain.revenue.dto.RevenueDto;
 import com.haechan.finance.domain.revenue.entity.Revenue;
 import com.haechan.finance.domain.revenue.repository.RevenueRepository;
@@ -10,6 +11,7 @@ import com.haechan.finance.domain.settlement.entity.Settlement;
 import com.haechan.finance.global.feign.ContractFeignClient;
 import com.haechan.finance.global.feign.DistributorFeignClient;
 import com.haechan.finance.domain.settlement.repository.SettlementRepository;
+import com.haechan.finance.global.feign.OstFeignClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,6 +35,7 @@ public class SettlementService {
     private final RevenueRepository revenueRepository;
     private final ContractFeignClient contractFeignClient;
     private final DistributorFeignClient distributorFeignClient;
+    private final OstFeignClient ostFeignClient;
 
     // 특정달 수익에 대한 정산
     // 유통사 -> 가창자 -> 제작사 -> 본사 순
@@ -85,11 +88,13 @@ public class SettlementService {
             Double singerFee = fee * singerRate;
             fee -= singerFee;
 
+            OstFeignResponse ostFeignResponse = ostFeignClient.findOstById(contractFeignResponse.getOstId());
+
             Settlement singerSettlement = Settlement.builder()
                     .contractId(contractId)
                     .type(SINGER)
                     // .memberId(contract.getOst().getSinger().getId())
-                    .memberId(contractFeignResponse.getOst().getSingerId())
+                    .memberId(ostFeignResponse.getSingerId())
                     .settleDate(LocalDateTime.now())
                     .fee(singerFee)
                     .build();
@@ -105,7 +110,7 @@ public class SettlementService {
                     .contractId(contractId)
                     .type(PRODUCER)
                     // .memberId(contract.getOst().getProducer().getId())
-                    .memberId(contractFeignResponse.getOst().getProducerId())
+                    .memberId(ostFeignResponse.getProducerId())
                     .settleDate(LocalDateTime.now())
                     .fee(producerFee)
                     .build();

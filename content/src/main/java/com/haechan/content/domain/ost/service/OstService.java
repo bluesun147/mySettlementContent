@@ -55,6 +55,16 @@ public class OstService {
 
     public OstFeignResponse findOstById(Long memberId) {
         Ost ost = ostRepository.findById(memberId).orElseThrow();
-        return new OstFeignResponse(ost.getId(), ost.getTitle());
+//        return new OstFeignResponse(ost.getId(), ost.getTitle());
+
+        log.info("ost = {}", ost.getId());
+
+        return OstFeignResponse.builder()
+                .ostId(ost.getId())
+                .dramaId(ost.getDrama().getId())
+                .producerId(ost.getProducerId())
+                .singerId(ost.getSingerId())
+                .title(ost.getTitle())
+                .build();
     }
 }

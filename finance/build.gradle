@@ -59,7 +59,7 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
 	// myFeignDto jar library
-	implementation files('feign-0.0.15.jar')
+	implementation files('feign-0.0.17.jar')
 }
 
 dependencyManagement {

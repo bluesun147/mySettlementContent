@@ -115,6 +115,7 @@ public class ContractService {
         // return new ContractFeignResponse(contract.getId(), contract.getProducerPercent(), contract.getSingerPercent());
         return ContractFeignResponse.builder()
                 .contractId(contract.getId())
+                .ostId(contract.getOst().getId())
                 .distributorId(contract.getDistributorId())
                 .producerPercent(contract.getProducerPercent())
                 .singerPercent(contract.getSingerPercent())
