@@ -1,4 +1,4 @@
-package com.haechan.finance.domain;
+package com.haechan.gateway;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
