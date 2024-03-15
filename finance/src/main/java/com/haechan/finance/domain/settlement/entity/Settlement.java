@@ -1,22 +1,19 @@
 package com.haechan.finance.domain.settlement.entity;
 
 import com.haechan.finance.domain.settlement.dto.MemberType;
+import com.haechan.finance.global.BaseTime;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 // 정산
 
 @ToString
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Settlement {
+public class Settlement extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,16 +42,6 @@ public class Settlement {
     // 정산금
     @Column
     private Double fee;
-
-    // 생성 날짜
-    @Column
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    // 업데이트 날짜
-    @Column
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     @Builder
     public Settlement(Long contractId, MemberType type, Long memberId, LocalDateTime settleDate, Double fee) {
