@@ -1,8 +1,14 @@
-package com.haechan.content.domain.Stock;
+package com.haechan.content.domain.stock.service;
 
+import com.haechan.content.domain.stock.entity.Stock;
+import com.haechan.content.domain.stock.repository.StockRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 // https://thalals.tistory.com/370
 // https://ksh-coding.tistory.com/125
@@ -13,6 +19,10 @@ import org.springframework.stereotype.Service;
 public class StockService {
 
     private final StockRepository stockRepository;
+
+    public void test() {
+        System.out.println("wewe");
+    }
 
     public void decrease(final Long id, final Long quantity) {
         Stock stock = stockRepository.findById(id).orElseThrow();
@@ -45,5 +55,23 @@ public class StockService {
         Stock stock = stockRepository.findByWithOptimisticLock(id);
         stock.decrease(quantity);
         stockRepository.saveAndFlush(stock);
+    }
+
+    public Page<Stock> getStockList(Pageable pageable) {
+        return stockRepository.findAll(pageable);
+    }
+
+    public List<Stock> getAllStock() {
+        return stockRepository.findAll();
+    }
+
+    @Transactional
+    public void change(Long stockId, Long amount, String changeType) {
+        Stock stock = stockRepository.findByWithPessimisticLock(stockId);
+        if (changeType.equals("PLUS")) {
+            stock.increase(amount);
+        } else if (changeType.equals("MINUS")) {
+            stock.decrease(amount);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.haechan.content.domain.Stock;
+package com.haechan.content.domain.stock.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
