@@ -1,11 +1,9 @@
 package com.haechan.content.domain.contract.entity;
 
 import com.haechan.content.domain.ost.entity.Ost;
+import com.haechan.content.global.BaseTime;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -13,11 +11,10 @@ import java.time.LocalDateTime;
 // ost 유통 계약서
 
 @ToString
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Contract {
+public class Contract extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,16 +47,6 @@ public class Contract {
     // 종료일
     @Column
     private LocalDateTime endDate;
-
-    // 생성 날짜
-    @Column
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    // 업데이트 날짜
-    @Column
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     @Builder
     public Contract(Ost ost, Long distributorId,

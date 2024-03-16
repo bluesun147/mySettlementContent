@@ -20,9 +20,11 @@ public class Ost {
 
     // 간접 참조로 변경
     // 제작사
+    @Column
     private Long producerId;
 
     // 가창자
+    @Column
     private Long singerId;
 
     // ost 제목

@@ -1,20 +1,18 @@
 package com.haechan.finance.domain.revenue.entity;
 
+import com.haechan.finance.global.BaseTime;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 // 수익 계산서
 
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @ToString
-public class Revenue {
+public class Revenue extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,11 +31,6 @@ public class Revenue {
     // 수익
     @Column
     private Double fee;
-
-    // 생성 날짜
-    @Column
-    @CreatedDate
-    private LocalDateTime createdAt;
 
     @Builder
     public Revenue(Long contractId, LocalDateTime date, Double fee) {

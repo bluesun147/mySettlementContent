@@ -1,5 +1,6 @@
-package com.haechan.content.domain.Stock;
+package com.haechan.content.domain.stock.repository;
 
+import com.haechan.content.domain.stock.entity.Stock;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
